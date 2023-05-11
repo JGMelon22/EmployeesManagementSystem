@@ -1,4 +1,5 @@
 using System.Data;
+using EmployeesApi.Infrastructure.Validators.Employee;
 using MySql.Data.MySqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,11 @@ builder.Services.AddCors();
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+// FluentValidation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<AddEmployeeDto>, AddEmployeeValidator>();
+builder.Services.AddScoped<IValidator<UpdateEmployeeDto>, UpdateEmployeeValidator>();
 
 // MySQL Data
 builder.Services.AddScoped<IDbConnection>(x =>
