@@ -8,7 +8,7 @@ USE company;
 CREATE TABLE employees
 (
    id INT AUTO_INCREMENT,
-   name VARCHAR(50) NOT NULL,
+   name VARCHAR(70) NOT NULL,
    age SMALLINT NOT NULL,
    active BIT DEFAULT 0,
    CONSTRAINT pk_employee PRIMARY KEY(id)
