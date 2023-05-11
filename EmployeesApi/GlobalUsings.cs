@@ -4,3 +4,6 @@ global using EmployeesApi.DTOs.Employee;
 global using FluentValidation.AspNetCore;
 global using FluentValidation;
 global using Microsoft.EntityFrameworkCore;
+global using EmployeesApi.Interfaces;
+global using System.Data;
+global using EmployeesApi.Infrastructure.Data;
