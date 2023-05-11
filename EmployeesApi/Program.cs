@@ -23,9 +23,10 @@ builder.Services.AddScoped<IValidator<UpdateEmployeeDto>, UpdateEmployeeValidato
 builder.Services.AddScoped<IDbConnection>(x =>
     new MySqlConnection(builder.Configuration.GetConnectionString("Default")));
 
-// DbContext
+// DbContext Pomelo
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySQL(builder.Configuration.GetConnectionString("Default")));
+    options.UseMySql(builder.Configuration["ConnectionStrings:Default"],
+    ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:Default"])));
 
 // Repository and Interface 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();

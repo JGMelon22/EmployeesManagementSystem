@@ -72,9 +72,9 @@ public class EmployeeRepository : IEmployeeRepository
         return serviceResponse;
     }
 
-    public async Task RemoveEmployee(int id)
+    public async Task<ServiceResponse<List<GetEmployeeDto>>> RemoveEmployee(int id)
     {
-        var serviceResponse = new ServiceResponse<GetEmployeeDto>();
+        var serviceResponse = new ServiceResponse<List<GetEmployeeDto>>();
 
         var findEmployeeQuery = @"SELECT id,
                                          name,
@@ -102,16 +102,22 @@ public class EmployeeRepository : IEmployeeRepository
             await _dbConnection.ExecuteAsync(removeEmployeeQuery, new { Id = id });
 
             _dbConnection.Close();
+
+            serviceResponse.Data = await _dbContext.Employees.Select(x => _mapper.Map<GetEmployeeDto>(x)).ToListAsync(); // Aqui
         }
         catch (Exception ex)
         {
             serviceResponse.Success = false;
             serviceResponse.Message = ex.Message;
         }
+
+        return serviceResponse;
     }
 
-    public async Task UpdateEmployee(UpdateEmployeeDto updatedEmployee)
+    public async Task<ServiceResponse<GetEmployeeDto>> UpdateEmployee(UpdateEmployeeDto updatedEmployee)
     {
+        var serviceResponse = new ServiceResponse<GetEmployeeDto>();
+
         var findEmployeeQuery = @"SELECT id,
                                          name,
                                          age, 
@@ -124,8 +130,6 @@ public class EmployeeRepository : IEmployeeRepository
                                         age = @Age,
                                         active = @Active
                                     WHERE id = @Id;";
-
-        var serviceResponse = new ServiceResponse<GetEmployeeDto>();
 
         try
         {
@@ -150,11 +154,15 @@ public class EmployeeRepository : IEmployeeRepository
             });
 
             _dbConnection.Close();
+
+            serviceResponse.Data = _mapper.Map<GetEmployeeDto>(employee);
         }
         catch (Exception ex)
         {
             serviceResponse.Success = false;
             serviceResponse.Message = ex.Message;
         }
+
+        return serviceResponse;
     }
 }
