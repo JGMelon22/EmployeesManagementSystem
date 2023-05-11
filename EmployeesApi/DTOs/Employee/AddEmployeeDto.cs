@@ -1,8 +1,7 @@
-namespace EmployeesApi.Domain.Entities;
+namespace EmployeesApi.DTOs.Employee;
 
-public class Employee
+public record AddEmployeeDto
 {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty!;
     public Int16 Age { get; set; }
     public byte Active { get; set; }

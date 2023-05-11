@@ -1,6 +1,6 @@
-namespace EmployeesApi.Domain.Entities;
+namespace EmployeesApi.DTOs.Employee;
 
-public class Employee
+public record UpdateEmployeeDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty!;
