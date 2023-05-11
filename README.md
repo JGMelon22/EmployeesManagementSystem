@@ -5,7 +5,7 @@ A simple system to register employees made with ASP .NET Core 6 and React
 - FluentValidation.AspNetCore
 - dapper
 - MySql.Data
-- MySql.Data.EntityFrameworkCore
+- MySql.EntityFrameworkCore
 - AutoMapper.Extensions.Microsoft.DependencyInjection
 - Microsoft.EntityFrameworkCore.Design
 - Microsoft.EntityFrameworkCore.Tools

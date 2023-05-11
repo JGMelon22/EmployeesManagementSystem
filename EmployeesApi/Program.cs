@@ -1,5 +1,7 @@
 using System.Data;
+using EmployeesApi.Infrastructure.Repositories;
 using EmployeesApi.Infrastructure.Validators.Employee;
+using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,13 @@ builder.Services.AddScoped<IValidator<UpdateEmployeeDto>, UpdateEmployeeValidato
 // MySQL Data
 builder.Services.AddScoped<IDbConnection>(x =>
     new MySqlConnection(builder.Configuration.GetConnectionString("Default")));
+
+// DbContext
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("Default")));
+
+// Repository and Interface 
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

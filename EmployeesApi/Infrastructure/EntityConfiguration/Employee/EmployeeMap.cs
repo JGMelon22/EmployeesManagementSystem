@@ -6,9 +6,11 @@ public class EmployeeMap : IEntityTypeConfiguration<Employee>
     {
         builder.ToTable("employees");
 
-        builder.HasKey("id");
+        builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Id)
+            .HasColumnType("INT")
+            .HasColumnName("id")
             .ValueGeneratedOnAdd();
 
         builder.HasIndex(e => e.Id);
