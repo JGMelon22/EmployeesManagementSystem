@@ -1,9 +1,19 @@
+using System.Data;
+using MySql.Data.MySqlClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 // Adding CORS service
 builder.Services.AddCors();
+
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+// MySQL Data
+builder.Services.AddScoped<IDbConnection>(x =>
+    new MySqlConnection(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
