@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import './App.css';
 
 import addEmployeeLogo from './assets/create-logo.png';
@@ -10,6 +11,14 @@ function App() {
   const baseUrl = "https://localhost:7076/api/employees";
 
   const [data, setData] = useState([]);
+
+  // include modal states
+  const [includeModal, setIncludeModal] = useState(false);
+
+  // Open and close include modal 
+  const openCloseIncludeModal = () => {
+    setIncludeModal(!includeModal);
+  }
 
   // Get Request
   const getEmployees = async () => {
@@ -35,7 +44,7 @@ function App() {
       </nav>
       <header id="CreateHeader">
         <img id="AddEmployeeLogo" src={addEmployeeLogo} alt='Create' />
-        <button className='btn btn-success' /*{onClick={}}*/>New Employee</button>
+        <button className='btn btn-success' onClick={() => openCloseIncludeModal()}>New Employee</button>
       </header>
       <table className='table table-bordered table-hover'>
         <thead>
@@ -65,6 +74,28 @@ function App() {
           ))}
         </tbody>
       </table>
+
+      {/* Include Modal */}
+      <Modal isOpen={includeModal}>
+        <ModalHeader>Register an Employee</ModalHeader>
+        <ModalBody className='form-group'>
+          <label>Name</label>
+          <br />
+          <input type='text' className='form-control' name='name'></input>
+          <br />
+          <label>Age</label>
+          <br />
+          <input type='number' className='form-control' name='age'></input>
+          <br />
+          <label>Is Active?</label>
+          <br />
+          <input type='checkbox' className='form-check-input' name='active'></input>
+        </ModalBody>
+        <ModalFooter>
+          <button className='btn btn-success'>Register</button>
+          <button className='btn btn-danger' onClick={() => openCloseIncludeModal()}>Cancel</button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 }
