@@ -75,6 +75,30 @@ function App() {
       });
   }
 
+  // Put Request
+  const putEmployees = async () => {
+    selectedEmployee.age = parseInt(selectedEmployee.age);
+    selectedEmployee.active = selectedEmployee.active ? true : false;
+    await axios.put(baseUrl + "/", selectedEmployee)
+      .then(response => {
+        var answer = response.data; // Sent input data
+        var auxiliaryData = data; // Api data
+
+        // Search each id till find the correspondent one 
+        // then map the input data with selected employee from api
+        auxiliaryData.forEach(employee => {
+          if (employee.id === selectedEmployee.id) {
+            employee.name = answer.name;
+            employee.age = answer.age;
+            employee.active = answer.active;
+          }
+        });
+        openCloseEditModal();
+      }).catch(error => {
+        console.log(error.response.data);
+      })
+  }
+
   // Use Effect to work with server effects, 
   useEffect(() => {
     getEmployees()
@@ -82,8 +106,8 @@ function App() {
 
   return (
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a className="navbar-brand m-1" href='http://localhost:3000'>Employees System</a>
+      <nav className="navbar navbar-expand-lg opacity-75 navbar-dark bg-primary">
+        <a className="navbar-brand m-1 border rounded" href='http://localhost:3000'>&nbsp;Employees System&nbsp;</a>
         <ul className="navbar-nav me-auto" />
       </nav>
       <header id="CreateHeader">
@@ -110,7 +134,7 @@ function App() {
               <td>{employee.active ? 'Yes' : 'No'}</td>
               <td className='text-center'>
                 <button className='btn btn-info text-white' onClick={() => selectEmployee(employee, "Edit")}>Edit</button> {" "}
-                <button className='btn btn-danger'>Delete</button>
+                <button className='btn btn-danger' onClick={() => selectEmployee(employee, "Delete")}>Delete</button>
               </td>
             </tr>
           ))}
@@ -164,7 +188,7 @@ function App() {
           </div>
         </ModalBody>
         <ModalFooter>
-          <button className='btn btn-primary'>Edit</button> {" "}
+          <button className='btn btn-primary' onClick={() => putEmployees()}>Edit</button> {" "}
           <button className='btn btn-secondary opacity-75' onClick={() => openCloseEditModal()}>Cancel</button>
         </ModalFooter>
       </Modal>
