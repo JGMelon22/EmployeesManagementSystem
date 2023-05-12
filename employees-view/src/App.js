@@ -12,8 +12,11 @@ function App() {
 
   const [data, setData] = useState([]);
 
-  // include modal states
+  // Include modal states
   const [includeModal, setIncludeModal] = useState(false);
+
+  // Edit modal states
+  const [editModal, setEditModal] = useState(false);
 
   // Obtains data from inputs
   const [selectedEmployee, setSelectedEmployee] = useState({
@@ -26,6 +29,17 @@ function App() {
   // Open and close include modal 
   const openCloseIncludeModal = () => {
     setIncludeModal(!includeModal);
+  }
+
+  // Open and close edit modal
+  const openCloseEditModal = () => {
+    setEditModal(!editModal);
+  }
+
+  // Select employee to edit
+  const selectEmployee = (employee, option) => {
+    setSelectedEmployee(employee);
+    (option === "Edit") && openCloseEditModal();
   }
 
   // Get input from include modal
@@ -95,8 +109,8 @@ function App() {
               <td>{employee.age}</td>
               <td>{employee.active ? 'Yes' : 'No'}</td>
               <td className='text-center'>
-                <button className='btn btn-info text-white'/*{onClick={}}*/>Edit</button> {" "}
-                <button className='btn btn-danger' /*{onClick={}}*/>Delete</button>
+                <button className='btn btn-info text-white' onClick={() => selectEmployee(employee, "Edit")}>Edit</button> {" "}
+                <button className='btn btn-danger'>Delete</button>
               </td>
             </tr>
           ))}
@@ -107,21 +121,51 @@ function App() {
       <Modal isOpen={includeModal}>
         <ModalHeader>Register an Employee</ModalHeader>
         <ModalBody className='form-group'>
-          <label>Name</label>
-          <br />
-          <input type='text' className='form-control' name='name' onChange={handleChange}></input>
-          <br />
-          <label>Age</label>
-          <br />
-          <input type='number' className='form-control' name='age' onChange={handleChange}></input>
-          <br />
-          <label>Is Active?</label>
-          <br />
-          <input type='checkbox' className='form-check-input' name='active' onChange={handleChange}></input>
+          <div className='form-group'>
+            <label>Name</label>
+            <br />
+            <input type='text' className='form-control' name='name' onChange={handleChange}></input>
+            <br />
+            <label>Age</label>
+            <br />
+            <input type='number' className='form-control' name='age' onChange={handleChange}></input>
+            <br />
+            <label>Is Active?</label>
+            <br />
+            <input type='checkbox' className='form-check-input' name='active' onChange={handleChange}></input>
+          </div>
         </ModalBody>
         <ModalFooter>
           <button className='btn btn-success' onClick={() => postEmployees()}>Register</button> {" "}
           <button className='btn btn-danger' onClick={() => openCloseIncludeModal()}>Cancel</button>
+        </ModalFooter>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal isOpen={editModal}>
+        <ModalHeader>Edit Employee</ModalHeader>
+        <ModalBody>
+          <div className='form-group'>
+            <label>Id</label>
+            <br />
+            <input type='text' value={selectedEmployee && selectedEmployee.id} className='form-control' readOnly />
+            <br />
+            <label>Name</label>
+            <br />
+            <input type='text' value={selectedEmployee && selectedEmployee.name} className='form-control' name='name' onChange={handleChange} />
+            <br />
+            <label>Age</label>
+            <br />
+            <input type='number' value={selectedEmployee && selectedEmployee.age} className='form-control' name='age' onChange={handleChange} />
+            <br />
+            <label>Age</label>
+            <br />
+            <input type='checkbox' name='active' checked={selectedEmployee && selectedEmployee.active} onChange={handleChange} />
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <button className='btn btn-primary'>Edit</button> {" "}
+          <button className='btn btn-secondary opacity-75' onClick={() => openCloseEditModal()}>Cancel</button>
         </ModalFooter>
       </Modal>
     </div>
