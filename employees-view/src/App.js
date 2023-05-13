@@ -18,6 +18,9 @@ function App() {
   // Edit modal states
   const [editModal, setEditModal] = useState(false);
 
+  // Delete modal states
+  const [deleteModal, setDeleteModal] = useState(false);
+
   // Obtains data from inputs
   const [selectedEmployee, setSelectedEmployee] = useState({
     id: '',
@@ -36,10 +39,16 @@ function App() {
     setEditModal(!editModal);
   }
 
+  // Open and close delete modal
+  const openCloseDeleteModal = () => {
+    setDeleteModal(!deleteModal);
+  }
+
   // Select employee to edit
   const selectEmployee = (employee, option) => {
-    setSelectedEmployee(employee);
-    (option === "Edit") && openCloseEditModal();
+    setSelectedEmployee(employee)
+      ? (option === "Edit") && openCloseEditModal()
+      : (option === "Delete") && openCloseDeleteModal();
   }
 
   // Get input from include modal
@@ -190,6 +199,29 @@ function App() {
         <ModalFooter>
           <button className='btn btn-primary' onClick={() => putEmployees()}>Edit</button> {" "}
           <button className='btn btn-secondary opacity-75' onClick={() => openCloseEditModal()}>Cancel</button>
+        </ModalFooter>
+      </Modal>
+
+      {/* Delete Modal */}
+      <Modal isOpen={deleteModal}>
+        <ModalHeader>Delete Employee</ModalHeader>
+        <ModalBody>
+          <div className='alert alert-danger'>
+            Are you sure you want to delete this employee?
+          </div>
+          <div className='form-group'>
+            <label>Id</label>
+            <br />
+            <input type='text' value={selectedEmployee && selectedEmployee.id} className='form-control' readOnly />
+            <br />
+            <label>Name</label>
+            <br />
+            <input type='text' value={selectedEmployee && selectedEmployee.name} className='form-control' readOnly />
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <button className='btn btn-danger'>Delete</button> {" "}
+          <button className='btn btn-secondary opacity-75' onClick={() => openCloseDeleteModal()}>Cancel</button>
         </ModalFooter>
       </Modal>
     </div>
