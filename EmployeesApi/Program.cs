@@ -1,7 +1,5 @@
-using System.Data;
 using EmployeesApi.Infrastructure.Repositories;
 using EmployeesApi.Infrastructure.Validators.Employee;
-using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
