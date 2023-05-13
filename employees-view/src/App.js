@@ -108,6 +108,17 @@ function App() {
       })
   }
 
+  // Delete Request
+  const deleteEmployee = async () => {
+    await axios.delete(baseUrl + "/" + selectedEmployee.id)
+      .then(response => {
+        setData(data.filter(employee => employee.id !== response.data));
+        openCloseDeleteModal();
+      }).catch(error => {
+        console.log(error.response.data);
+      })
+  }
+
   // Use Effect to work with server effects, 
   useEffect(() => {
     getEmployees()
@@ -220,7 +231,7 @@ function App() {
           </div>
         </ModalBody>
         <ModalFooter>
-          <button className='btn btn-danger'>Delete</button> {" "}
+          <button className='btn btn-danger' onClick={() => deleteEmployee()}>Delete</button> {" "}
           <button className='btn btn-secondary opacity-75' onClick={() => openCloseDeleteModal()}>Cancel</button>
         </ModalFooter>
       </Modal>
