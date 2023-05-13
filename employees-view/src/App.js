@@ -21,6 +21,9 @@ function App() {
   // Delete modal states
   const [deleteModal, setDeleteModal] = useState(false);
 
+  // Fix useEffect infinity looping
+  const [updateData, setUpdateData] = useState(true);
+
   // Obtains data from inputs
   const [selectedEmployee, setSelectedEmployee] = useState({
     id: '',
@@ -78,6 +81,7 @@ function App() {
     await axios.post(baseUrl, selectedEmployee)
       .then(response => {
         setData(data.concat(response.data));
+        setUpdateData(true);
         openCloseIncludeModal();
       }).catch(error => {
         console.log(error.response.data);
@@ -102,6 +106,7 @@ function App() {
             employee.active = answer.active;
           }
         });
+        setUpdateData(true);
         openCloseEditModal();
       }).catch(error => {
         console.log(error.response.data);
@@ -113,16 +118,21 @@ function App() {
     await axios.delete(baseUrl + "/" + selectedEmployee.id)
       .then(response => {
         setData(data.filter(employee => employee.id !== response.data));
+        setUpdateData(true);
         openCloseDeleteModal();
       }).catch(error => {
         console.log(error.response.data);
       })
   }
 
-  // Use Effect to work with server effects, 
+  // Use Effect to work with server effects
+  // edited to break infinity useEffect loop 
   useEffect(() => {
-    getEmployees()
-  }, []);
+    if (updateData) {
+      getEmployees();
+      setUpdateData(false);
+    }
+  }, [updateData])
 
   return (
     <div className="App">
