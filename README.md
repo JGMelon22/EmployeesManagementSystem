@@ -1,7 +1,7 @@
-# EmployeesManagementSystem 
+# Employees Management System 
 A simple system to register employees made with ASP .NET Core 6 and React
 
-![image](https://github.com/JGMelon22/EmployeesManagementSystem/assets/73988556/5a4e15d6-131f-44d2-af36-a4132ab29b66)
+<img src="https://github.com/JGMelon22/EmployeesManagementSystem/assets/73988556/cf95e844-9988-41ab-8168-c71dde5aa346" width="70%">
 
 <h3>NuGet Packages</h3>
 - FluentValidation.AspNetCore</br>
