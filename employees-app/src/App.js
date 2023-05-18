@@ -76,7 +76,7 @@ function App() {
   // Post Request
   const postEmployees = async () => {
     delete selectedEmployee.id;
-    selectedEmployee.id = parseInt(selectedEmployee.age);
+    selectedEmployee.age = parseInt(selectedEmployee.age);
     selectedEmployee.active = selectedEmployee.active ? true : false; // 1 : 0
     await axios.post(baseUrl, selectedEmployee)
       .then(response => {
