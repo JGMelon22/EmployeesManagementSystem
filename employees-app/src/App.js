@@ -49,9 +49,14 @@ function App() {
 
   // Select employee to edit
   const selectEmployee = (employee, option) => {
-    setSelectedEmployee(employee)
-      ? (option === "Edit") && openCloseEditModal()
-      : (option === "Delete") && openCloseDeleteModal();
+    setSelectedEmployee(employee);
+    if (option === "Edit") {
+      openCloseEditModal()
+    }
+
+    else {
+      openCloseDeleteModal();
+    }
   }
 
   // Get input from include modal
@@ -212,7 +217,7 @@ function App() {
             <br />
             <input type='number' value={selectedEmployee && selectedEmployee.age} className='form-control' name='age' onChange={handleChange} />
             <br />
-            <label>Age</label>
+            <label>Is Active?</label>
             <br />
             <input type='checkbox' name='active' checked={selectedEmployee && selectedEmployee.active} onChange={handleChange} />
           </div>
